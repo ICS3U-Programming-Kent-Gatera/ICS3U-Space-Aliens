@@ -5,7 +5,7 @@
 
 import ugame
 import stage
- 
+
 
 def game_scene():
     # This function is the main game_scene
@@ -20,7 +20,7 @@ def game_scene():
     # create a stage for the background to show up on
     #   and set the grame to 60fps
     game = stage.stage(ugame.display, 60)
-    #set the layers of all sprites, items show up in order
+    # set the layers of all sprites, items show up in order
     game.layers = [background]
     # render all sprites
     #   most likely you will only render the background once per game scene
