@@ -9,6 +9,7 @@ import ugame
 import stage
 import constants
 
+
 def game_scene():
 
     # Gets images from file (16x16) and sets it as the stage.
@@ -18,10 +19,15 @@ def game_scene():
     # Sprite
     image_bank_sprites = stage.Bank.from_bmp16("space_aliens.bmp")
     # Displays image variable image_bank_background 10x8 for each tile.
-    background = stage.Grid(image_bank_background, constants.SCREEN_GRID_Y, constants.SCREEN_GRID_X)
+    background = stage.Grid(
+        image_bank_background, constants.SCREEN_GRID_Y, constants.SCREEN_GRID_X
+    )
     # Initializes the ship variable to a sprite from image bank sprites and
     # gets the fifth image and sets x = 75 y= 66
-    ship = stage.Sprite(image_bank_sprites, 5, 75, constants.SCREEN_GRID_X - (2*constants.SPRITE_SIZE))
+    ship = stage.Sprite(
+        image_bank_sprites, 5, 75, constants.SCREEN_GRID_X -
+        (2 * constants.SPRITE_SIZE)
+    )
     # Displays the image stage background at a rate of 60 Hz and
     # 60 Frames Per Sec (FPS)
     game = stage.Stage(ugame.display, constants.FPS)
