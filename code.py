@@ -13,12 +13,14 @@ def game_scene():
 
     # Gets images from file (16x16) and sets it as the stage.
     # Background
-    image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
+    image_bank_background = stage.Bank.from_bmp16
+    ("space_aliens_background.bmp")
     # Sprite
     image_bank_sprites = stage.Bank.from_bmp16("space_aliens.bmp")
     # Displays image variable image_bank_background 10x8 for each tile.
     background = stage.Grid(image_bank_background, 10, 8)
-    # Initializes the ship variable to a sprite from image bank sprites and gets the fifth image and sets x = 75 y= 66
+    # Initializes the ship variable to a sprite from image bank sprites and
+    # gets the fifth image and sets x = 75 y= 66
     ship = stage.Sprite(image_bank_sprites, 4, 75, 66)
     # Displays the image stage background at a rate of 60 Hz and
     # 60 Frames Per Sec (FPS)
