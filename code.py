@@ -1,33 +1,59 @@
 #!/usr/bin/env python3
-# Created by: Kent Gatera
-# Created on: Jan 9th
-# This program is the "Space Aliens" program on the pyBadge.
+# Created By: Kent G
+# Date: Jan. 17th, 2023
+# This Program is a gamed called space aliens invasion
+# where the player fights off an invasion of space aliens.
+# Modules used.
 
-import stage
 import ugame
+import stage
 
 
 def game_scene():
-    # This function is the main game_scene
 
-    # Imagine banks for CircuitPython
-    image_bank_background = stage.bank.from_bmp16("space_aliens_background.bmp")
-
-    # set the background to image 0 in the image bank
-    #    and the size (10x8 tiles of size 16x16)
-    background = stage.grid(image_bank_background, 10, 8)
-
-    # create a stage for the background to show up on
-    #   and set the grame to 60fps
-    game = stage.stage(ugame.display, 60)
-    # set the layers of all sprites, items show up in order
-    game.layers = [background]
-    # render all sprites
-    #   most likely you will only render the background once per game scene
+    # Gets images from file (16x16) and sets it as the stage.
+    # Background
+    image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
+    # Sprite
+    image_bank_sprites = stage.Bank.from_bmp16("space_aliens.bmp")
+    # Displays image variable image_bank_background 10x8 for each tile.
+    background = stage.Grid(image_bank_background, 10, 8)
+    # Initializes the ship variable to a sprite from image bank sprites and gets the fifth image and sets x = 75 y= 66
+    ship = stage.Sprite(image_bank_sprites, 4, 75, 66)
+    # Displays the image stage background at a rate of 60 Hz and
+    # 60 Frames Per Sec (FPS)
+    game = stage.Stage(ugame.display, 60)
+    # Creates a list of layers for the game (In order left appear first)
+    game.layers = [ship] + [background]
+    # Renders all sprites
+    # Mostly renders the background once every game scene.
     game.render_block()
-    # repeat forever, game loop
+    # Place Holder
     while True:
-        pass
+        # Get user input
+        keys = ugame.buttons.get_pressed()
+
+        if keys & ugame.K_X:
+            print("A")
+        if keys & ugame.K_O:
+            print("B")
+        if keys & ugame.K_START:
+            print("Start")
+        if keys & ugame.K_SELECT:
+            print("SELECT")
+        if keys & ugame.K_RIGHT:
+            ship.move(ship.x + 1, ship.y)
+        if keys & ugame.K_LEFT:
+            ship.move(ship.x - 1, ship.y)
+        if keys & ugame.K_DOWN:
+            ship.move(ship.x, ship.y + 1)
+        if keys & ugame.K_UP:
+            ship.move(ship.x, ship.y - 1)
+
+        # Update game logic.
+        # Redraw sprites
+        game.render_sprites([ship])
+        game.tick()
 
 
 if __name__ == "__main__":
