@@ -5,8 +5,8 @@
 # where the player fights off an invasion of space aliens.
 # Modules used.
 
-import ugame
 import stage
+import ugame
 import constants
 
 
