@@ -7,7 +7,7 @@
 
 import ugame
 import stage
-
+import constants
 
 def game_scene():
 
@@ -18,13 +18,13 @@ def game_scene():
     # Sprite
     image_bank_sprites = stage.Bank.from_bmp16("space_aliens.bmp")
     # Displays image variable image_bank_background 10x8 for each tile.
-    background = stage.Grid(image_bank_background, 10, 8)
+    background = stage.Grid(image_bank_background, constants.SCREEN_GRID_Y, constants.SCREEN_GRID_X)
     # Initializes the ship variable to a sprite from image bank sprites and
     # gets the fifth image and sets x = 75 y= 66
-    ship = stage.Sprite(image_bank_sprites, 4, 75, 66)
+    ship = stage.Sprite(image_bank_sprites, 5, 75, constants.SCREEN_GRID_X - (2*constants.SPRITE_SIZE))
     # Displays the image stage background at a rate of 60 Hz and
     # 60 Frames Per Sec (FPS)
-    game = stage.Stage(ugame.display, 60)
+    game = stage.Stage(ugame.display, constants.FPS)
     # Creates a list of layers for the game (In order left appear first)
     game.layers = [ship] + [background]
     # Renders all sprites
@@ -44,13 +44,25 @@ def game_scene():
         if keys & ugame.K_SELECT:
             print("SELECT")
         if keys & ugame.K_RIGHT:
-            ship.move(ship.x + 1, ship.y)
+            if ship.x <= constants.SCREEN_X - constants.SPRITE_SIZE:
+                ship.move(ship.x + constants.SPRITE_MOVEMENT_SPEED, ship.y)
+            else:
+                ship.move(constants.SCREEN_X - constants.SPRITE_SIZE, ship.y)
         if keys & ugame.K_LEFT:
-            ship.move(ship.x - 1, ship.y)
+            if ship.x >= 0:
+                ship.move(ship.x - constants.SPRITE_MOVEMENT_SPEED, ship.y)
+            else:
+                ship.move(0, ship.y)
         if keys & ugame.K_DOWN:
-            ship.move(ship.x, ship.y + 1)
+            if ship.y <= constants.SCREEN_Y:
+                ship.move(ship.x, ship.y + constants.SPRITE_MOVEMENT_SPEED)
+            else:
+                ship.move(ship.x, 0)
         if keys & ugame.K_UP:
-            ship.move(ship.x, ship.y - 1)
+            if ship.y >= 0:
+                ship.move(ship.x, ship.y - constants.SPRITE_MOVEMENT_SPEED)
+            else:
+                ship.move(ship.y, 0)
 
         # Update game logic.
         # Redraw sprites
