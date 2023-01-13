@@ -10,6 +10,57 @@ import ugame
 import constants
 
 
+def menu_scene():
+
+    # Gets images from file (16x16) and sets it as the stage.
+    # Background
+    image_bank_mt_background = stage.Bank.from_bmp16
+    ("mt_game_studio.bmp")
+    # Add text objects
+    text = []
+    text1 = stage.text(
+        width=29, height=12, font=None,
+        palette=constants.RED_PALETTE, buffer=None
+    )
+    text1.move(20, 10)
+    text1.text("MT Game Studios.")
+    text.append(text1)
+
+    text2 = stage.text(
+        width=29, height=12, font=None,
+        palette=constants.RED_PALETTE, buffer=None
+    )
+    text2.move(40, 110)
+    text2.text("PRESS START")
+    text.append(text2)
+    # get sound
+    pew_sound = open("pew.wav", "rb")
+    sound = ugame.uaudio
+    sound.stop()
+    sound.mute(False)
+
+    # Displays image variable image_bank_background 10x8 for each tile.
+    background = stage.Grid(
+        image_bank_mt_background, constants.SCREEN_GRID_Y,
+        constants.SCREEN_GRID_X
+    )
+
+    game = game.stage(ugame.display, constants.FPS)
+    # Creates a list of layers for the game (In order left appear first)
+    game.layers = text + [background]
+    # Renders all sprites
+    # Mostly renders the background once every game scene.
+    game.render_block()
+    # Place Holder
+    while True:
+        # Get user input
+        keys = ugame.buttons.get_pressed()
+
+        if keys & ugame.K_START != 0:
+            game_scene
+        game.tick()
+
+
 def game_scene():
 
     # Gets images from file (16x16) and sets it as the stage.
@@ -39,7 +90,8 @@ def game_scene():
     # Initializes the ship variable to a sprite from image bank sprites and
     # gets the fifth image and sets x = 75 y= 66
     ship = stage.Sprite(
-        image_bank_sprites, 5, 75, constants.SCREEN_GRID_X - (2 * constants.SPRITE_SIZE)
+        image_bank_sprites, 5, 75, constants.SCREEN_GRID_X -
+        (2 * constants.SPRITE_SIZE)
     )
     alien = stage.sprite(
         image_bank_sprites,
@@ -117,4 +169,4 @@ def game_scene():
 
 
 if __name__ == "__main__":
-    game_scene()
+    menu_scene()
