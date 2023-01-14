@@ -7,11 +7,13 @@
 
 import stage
 import ugame
+import random
+import time
 import constants
 
 
 def menu_scene():
-
+    # This function creates a menu scene.
     # Gets images from file (16x16) and sets it as the stage.
     # Background
     image_bank_mt_background = stage.Bank.from_bmp16
@@ -60,6 +62,71 @@ def menu_scene():
             game_scene
         game.tick()
 
+def splash_scene():
+    # This funtion creates a splash scene.
+
+    # Get sound ready.
+    # Playing the coin sound when the game boots up.
+    coin_sound = open("coin.wav", 'rb')
+    sound = ugame.uaudio
+    sound.stop()
+    sound.mute(False)
+    sound.play(coin_sound)
+    # Gets images from file (16x16) and sets it as the stage.
+    # Background
+    image_bank_mt_background = stage.Bank.from_bmp16
+    ("mt_game_studio.bmp")
+
+    # Displays image variable image_bank_background 10x8 for each tile.
+    background = stage.Grid(
+        image_bank_mt_background, constants.SCREEN_GRID_Y,
+        constants.SCREEN_GRID_X
+    )
+    # used this program to split the image into tile: 
+
+    #   https://ezgif.com/sprite-cutter/ezgif-5-818cdbcc3f66.png
+
+    background.tile(2, 2, 0)  # blank white
+    background.tile(3, 2, 1)
+    background.tile(4, 2, 2)
+    background.tile(5, 2, 3)
+    background.tile(6, 2, 4)
+    background.tile(7, 2, 0)  # blank white
+
+    background.tile(2, 3, 0)  # blank white
+    background.tile(3, 3, 5)
+    background.tile(4, 3, 6)
+    background.tile(5, 3, 7)
+    background.tile(6, 3, 8)
+    background.tile(7, 3, 0)  # blank white
+
+
+
+    background.tile(2, 4, 0)  # blank white
+    background.tile(3, 4, 9)
+    background.tile(4, 4, 10)
+    background.tile(5, 4, 11)
+    background.tile(6, 4, 12)
+    background.tile(7, 4, 0)  # blank white
+
+    background.tile(2, 5, 0)  # blank white
+    background.tile(3, 5, 0)
+    background.tile(4, 5, 13)
+    background.tile(5, 5, 14)
+    background.tile(6, 5, 0)
+    background.tile(7, 5, 0)  # blank white
+
+    game = game.stage(ugame.display, constants.FPS)
+    # Creates a list of layers for the game (In order left appear first)
+    game.layers = [background]
+    # Renders all sprites
+    # Mostly renders the background once every game scene.
+    game.render_block()
+    # Place Holder
+    while True:
+        # Wait for 2 seconds.
+        time.sleep(2)
+        menu_scene()
 
 def game_scene():
 
@@ -169,4 +236,4 @@ def game_scene():
 
 
 if __name__ == "__main__":
-    menu_scene()
+    splash_scene()
